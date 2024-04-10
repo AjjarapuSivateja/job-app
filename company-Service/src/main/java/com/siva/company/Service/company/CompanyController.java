@@ -9,6 +9,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
+   Logger log = LoggerFactory.getLogger(CompanyController.class);
    private  CompanyService companyService;
 
     public CompanyController(CompanyService companyService) {
@@ -16,6 +17,7 @@ public class CompanyController {
     }
     @GetMapping
     public ResponseEntity<List<Company>> getAllCompanies(){
+          log.info("Starting to get all Companies");
         return  new ResponseEntity<>(companyService.getAllCompanies(),HttpStatus.OK);
     }
     @PutMapping("/{id}")

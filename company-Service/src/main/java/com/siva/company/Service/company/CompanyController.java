@@ -1,5 +1,8 @@
 package com.siva.company.Service.company;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
+    Logger log = LoggerFactory.getLogger(CompanyController.class);
+
    private  CompanyService companyService;
 
     public CompanyController(CompanyService companyService) {
@@ -16,10 +21,12 @@ public class CompanyController {
     }
     @GetMapping
     public ResponseEntity<List<Company>> getAllCompanies(){
+        log.info("Starting to get all Companies");
         return  new ResponseEntity<>(companyService.getAllCompanies(),HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCompany(@PathVariable Long id,@RequestBody Company company ){
+        log.info("Starting to update Companies");
        boolean updated= companyService.updateCompany(company,id);
        if(updated) {
            return new ResponseEntity<>("Company Updated Successfully!", HttpStatus.OK);
@@ -28,6 +35,7 @@ public class CompanyController {
     }
     @PostMapping
     public ResponseEntity<String> addCompany(@RequestBody Company company){
+        log.info("Starting to post Companies");
         companyService.createCompany(company);
         return  new ResponseEntity("Company Added Successfully",HttpStatus.CREATED);
     }
@@ -41,6 +49,7 @@ public class CompanyController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Company> getCompanyById (@PathVariable Long id){
+        log.info("Starting to get companies based on id");
         Company company = companyService.getById(id);
         if(company!=null){
             return new ResponseEntity<>(company,HttpStatus.OK);
